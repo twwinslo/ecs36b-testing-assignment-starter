@@ -58,8 +58,13 @@ TEST(MakeSortedTests, SimpleSortArrayWithDuplicates) {
 
 RC_GTEST_PROP(MakeSortedTests,
               PropertyAfterSortingValuesAreInAscendingOrder,
-              ( std::vector<int> values)
+              ( const std::vector<int>& values)
 ) {
+    int arr[] = copy_vector_to_array(values);
+    make_sorted(arr, values.size());
+    for (int i = 0; i < values.size() - 1; i++) {
+        EXPECT_LE(arr[i], arr[i+1]);
+    }
     /* Test that after sorting an array, the values are in ascending order
      * Don't forget to free any memory that was dynamically allocated as part of your test.
      */

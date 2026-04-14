@@ -102,8 +102,14 @@ TEST(GetSortedTests, SimpleCopyWasMade) {
 
 RC_GTEST_PROP(GetSortedTests,
               PropertyAfterSortingValuesAreInAscendingOrder,
-              ( std::vector<int> values)
+              (const std::vector<int>& values)
 ) {
+    int arr[] = copy_vector_to_array(values);
+    int* sorted = get_sorted(arr, values.size());
+    for (int i = 0; i < values.size() - 1; i++) {
+        EXPECT_LE(sorted[i], sorted[i+1]);
+    }
+    free(sorted);
     /* Check that after sorting an array, the values are in ascending order
      * Don't forget to free any memory that was dynamically allocated as part of this test
      */
@@ -114,6 +120,12 @@ RC_GTEST_PROP(GetSortedTests,
               PropertyOriginalDoesNotChange,
               (const std::vector<int>&values)
 ) {
+    int arr[] = copy_vector_to_array(values);
+    int* sorted = get_sorted(arr, values.size());
+    for (int i = 0; i < values.size(); i++) {
+        EXPECT_EQ(arr[i], values[i]);
+    }
+    free(sorted);
     /*
      * Check that the original array was not modified.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -125,6 +137,13 @@ RC_GTEST_PROP(GetSortedTests,
               PropertyCopyWasMade,
               (const std::vector<int>&values)
 ) {
+    int arr[] = copy_vector_to_array(values);
+    int* sorted = get_sorted(arr, values.size());
+    for (int i = 0; i < values.size(); i++) {
+        for (int j = 0; j < values.size();j++)
+        EXPECT_NE(arr + i, sorted + j);
+    }
+    free(sorted);
     /*
      * Check that the sorted array is copy of the original array in sorted order.
      * (ar and copy point to different locations in memory and no parts of the two arrays overlap)

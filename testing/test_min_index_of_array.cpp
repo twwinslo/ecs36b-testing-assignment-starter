@@ -4,6 +4,7 @@
 #include "gmock/gmock.h"
 #include "rapidcheck/gtest.h"
 #include "sorting.h"
+#include "test_helpers.h"
 
 TEST(MinIndexOfArrayTests, SimpleMinIndexAtFrontOfArray) {
     int arr[] = {1,2,3,4,5};
@@ -57,7 +58,12 @@ TEST(MinIndexOfArrayTests, SimpleArrayDoesNotChange) {
 
 RC_GTEST_PROP(MinIndexOfArrayTests,
               PropertyFindMinIndex,
-              ()) {
+              (const std::vector<int>&values)) {
+    int arr[] = copy_vector_to_array(values);
+    int min_index = min_index_of_array(arr, values.size());
+    for (int i = 0; i < values.size(); i++) {
+        EXPECT_GE(arr[i], arr[min_index]);
+    }
     /* Check that the value at the location of the minimum index
      * is not larger than any of the other values in the array
      */
@@ -65,7 +71,12 @@ RC_GTEST_PROP(MinIndexOfArrayTests,
 
 RC_GTEST_PROP(MinIndexOfArrayTests,
               PropertyArrayDoesNotChange,
-              ()) {
+              (const std::vector<int>&values)) {
+    int arr[] = copy_vector_to_array(values);
+    int min_index = min_index_of_array(arr, values.size());
+    for (int i = 0; i < values.size(); i++) {
+        EXPECT_EQ(arr[i], values[i]);
+    }
     /*
      * Check that finding the minimum of the array did not change the contents of the array.
      */

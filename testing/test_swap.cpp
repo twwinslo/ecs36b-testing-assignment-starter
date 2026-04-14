@@ -40,6 +40,11 @@ RC_GTEST_PROP(SwapTests,
               PropertySwapTwoValues,
               (int a_start, int b_start)
 ) {
+    int a = a_start;
+    int b = b_start;
+    swap(a, b);
+    EXPECT_EQ(a_start, b);
+    EXPECT_EQ(b_start, a);
     /*
      * Swap two values and see if the swap was successful.
      */
@@ -50,6 +55,17 @@ RC_GTEST_PROP(SwapTests,
               PropertySwapValuesInArray,
               (const std::vector<int>& values)
 ) {
+    std::vector<int> values_copy = values;
+    swap(&values[0], &values[1]);
+    int i = 0;
+    EXPECT_EQ(values[0], values_copy[1]);
+    i++;
+    EXPECT_EQ(values[1], values_copy[0]);
+    i++;
+    for (; i <= values.size(); i++) {
+        EXPECT_EQ(values[i], values_copy[i]);
+    }
+
     /*
      * Swap two values in an array. See that they swapped and the others did not
      */
