@@ -8,6 +8,12 @@
 #include "rapidcheck/gtest.h"
 
 TEST(CopyArrayTests, SimpleValuesAreSame) {
+    int arr[] = {1,2,3,4,5};
+    int* arr_copy = copy_array(arr,5);
+    for (int i = 0; i < 5; i++) {
+        EXPECT_EQ(arr[i], arr_copy[i]);
+    }
+    free(arr_copy);
     /*
      * Check that the values in the copy are the same as the values in the original array.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -17,6 +23,12 @@ TEST(CopyArrayTests, SimpleValuesAreSame) {
 }
 
 TEST(CopyArrayTests, SimpleOriginalDoesNotChange) {
+    int arr[] = {1,2,3,4,5};
+    int* arr_copy = copy_array(arr,5);
+    for (int i = 0; i < 5; i++) {
+        EXPECT_EQ(arr[i], i+1);
+    }
+    free(arr_copy);
     /*
      * Check that the  values in the original array did not change.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -25,6 +37,12 @@ TEST(CopyArrayTests, SimpleOriginalDoesNotChange) {
 }
 
 TEST(CopyArrayTests, SimpleCopyWasMade) {
+    int arr[] = {1,2,3,4,5};
+    int* arr_copy = copy_array(arr,5);
+    for (int i = 0; i < 5; i++) {
+        EXPECT_NE(arr+i, arr_copy+i);
+    }
+    free(arr_copy);
     /*
      * Check that a copy was actually made
      * (ar and copy point to different locations in memory and no parts of the two arrays overlap)

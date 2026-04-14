@@ -9,12 +9,26 @@
 
 
 TEST(SwapTests, SimpleSwapTwoValues) {
+    int a = 1;
+    int b = 2;
+    swap(a, b);
+    EXPECT_EQ(a,2);
+    EXPECT_EQ(b,1);
     /*
      * Swap two values and see if the swap was successful.
      */
 }
 
 TEST(SwapTests, SimpleSwapValuesInArray) {
+    int arr[] = {1,2,3,4,5};
+    swap(&arr[1], &arr[2]);
+    swap(&arr[2],&arr[3]);
+    EXPECT_EQ(arr[0], 1);
+    EXPECT_EQ(arr[1], 3);
+    EXPECT_EQ(arr[2], 4);
+    EXPECT_EQ(arr[3], 2);
+    EXPECT_EQ(arr[4], 5);
+
     /*
      * Swap a few values in an array.
      * Check that the ones that swapped did swap and the ones that didn't swap
