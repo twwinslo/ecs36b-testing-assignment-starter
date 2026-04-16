@@ -51,7 +51,6 @@ TEST(GetSortedTests, SimpleSortAverageArray) {
 TEST(GetSortedTests, SimpleSortArrayWithDuplicates) {
     int arr[] = {2,2,5,1,2};
     int* arr_copy = get_sorted(arr, 5);
-    EXPECT_EQ(arr_copy[i], i+1);
     EXPECT_EQ(arr[0], 1);
     EXPECT_EQ(arr[1], 2);
     EXPECT_EQ(arr[2], 2);
@@ -104,9 +103,10 @@ RC_GTEST_PROP(GetSortedTests,
               PropertyAfterSortingValuesAreInAscendingOrder,
               (const std::vector<int>& values)
 ) {
-    int arr[] = copy_vector_to_array(values);
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
     int* sorted = get_sorted(arr, values.size());
-    for (int i = 0; i < values.size() - 1; i++) {
+    for (long unsigned int i = 0; i < values.size() - 1; i++) {
         EXPECT_LE(sorted[i], sorted[i+1]);
     }
     free(sorted);
@@ -120,9 +120,10 @@ RC_GTEST_PROP(GetSortedTests,
               PropertyOriginalDoesNotChange,
               (const std::vector<int>&values)
 ) {
-    int arr[] = copy_vector_to_array(values);
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
     int* sorted = get_sorted(arr, values.size());
-    for (int i = 0; i < values.size(); i++) {
+    for (long unsigned int i = 0; i < values.size(); i++) {
         EXPECT_EQ(arr[i], values[i]);
     }
     free(sorted);
@@ -137,10 +138,11 @@ RC_GTEST_PROP(GetSortedTests,
               PropertyCopyWasMade,
               (const std::vector<int>&values)
 ) {
-    int arr[] = copy_vector_to_array(values);
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
     int* sorted = get_sorted(arr, values.size());
-    for (int i = 0; i < values.size(); i++) {
-        for (int j = 0; j < values.size();j++)
+    for (long unsigned int i = 0; i < values.size(); i++) {
+        for (long unsigned int j = 0; j < values.size();j++)
         EXPECT_NE(arr + i, sorted + j);
     }
     free(sorted);

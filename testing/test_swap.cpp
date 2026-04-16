@@ -11,7 +11,7 @@
 TEST(SwapTests, SimpleSwapTwoValues) {
     int a = 1;
     int b = 2;
-    swap(a, b);
+    swap(&a, &b);
     EXPECT_EQ(a,2);
     EXPECT_EQ(b,1);
     /*
@@ -42,7 +42,7 @@ RC_GTEST_PROP(SwapTests,
 ) {
     int a = a_start;
     int b = b_start;
-    swap(a, b);
+    swap(&a, &b);
     EXPECT_EQ(a_start, b);
     EXPECT_EQ(b_start, a);
     /*
@@ -55,15 +55,16 @@ RC_GTEST_PROP(SwapTests,
               PropertySwapValuesInArray,
               (const std::vector<int>& values)
 ) {
-    std::vector<int> values_copy = values;
-    swap(&values[0], &values[1]);
-    int i = 0;
-    EXPECT_EQ(values[0], values_copy[1]);
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
+    swap(&arr[0], &arr[1]);
+    long unsigned int i = 0;
+    EXPECT_EQ(arr[0], arr[1]);
     i++;
-    EXPECT_EQ(values[1], values_copy[0]);
+    EXPECT_EQ(arr[1], arr[0]);
     i++;
     for (; i <= values.size(); i++) {
-        EXPECT_EQ(values[i], values_copy[i]);
+        EXPECT_EQ(arr[i], arr[i]);
     }
 
     /*

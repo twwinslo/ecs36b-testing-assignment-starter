@@ -33,6 +33,7 @@ int* copy_array(int* ar, int len) {
   * @param len: The length of the array to copy
   * @return: A copy of ar
   */
+  len = len -1;
   int* copy = ar;
   return copy;
 }

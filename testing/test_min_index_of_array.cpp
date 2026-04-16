@@ -46,7 +46,7 @@ TEST(MinIndexOfArrayTests, SimpleDuplicateMinimums) {
 
 TEST(MinIndexOfArrayTests, SimpleArrayDoesNotChange) {
     int arr[] = {1,2,3,4,5};
-    int min_index = min_index_of_array(arr, 5);
+    min_index_of_array(arr, 5);
     for (int i = 0; i < 5; i++) {
         EXPECT_EQ(arr[i], i+1);
     }
@@ -59,9 +59,10 @@ TEST(MinIndexOfArrayTests, SimpleArrayDoesNotChange) {
 RC_GTEST_PROP(MinIndexOfArrayTests,
               PropertyFindMinIndex,
               (const std::vector<int>&values)) {
-    int arr[] = copy_vector_to_array(values);
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
     int min_index = min_index_of_array(arr, values.size());
-    for (int i = 0; i < values.size(); i++) {
+    for (long unsigned int i = 0; i < values.size(); i++) {
         EXPECT_GE(arr[i], arr[min_index]);
     }
     /* Check that the value at the location of the minimum index
@@ -72,9 +73,10 @@ RC_GTEST_PROP(MinIndexOfArrayTests,
 RC_GTEST_PROP(MinIndexOfArrayTests,
               PropertyArrayDoesNotChange,
               (const std::vector<int>&values)) {
-    int arr[] = copy_vector_to_array(values);
-    int min_index = min_index_of_array(arr, values.size());
-    for (int i = 0; i < values.size(); i++) {
+    int arr[values.size()];
+    copy_vector_to_array(values, arr);
+    min_index_of_array(arr, values.size());
+    for (long unsigned int i = 0; i < values.size(); i++) {
         EXPECT_EQ(arr[i], values[i]);
     }
     /*
