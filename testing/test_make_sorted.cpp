@@ -60,10 +60,11 @@ RC_GTEST_PROP(MakeSortedTests,
               PropertyAfterSortingValuesAreInAscendingOrder,
               ( const std::vector<int>& values)
 ) {
+    if (values.size() == 0) return;
     int arr[values.size()];
     copy_vector_to_array(values, arr);
     make_sorted(arr, values.size());
-    for (long unsigned i = 0; i < values.size() - 1; i++) {
+    for (long unsigned i = 0; i + 1 < values.size(); i++) {
         EXPECT_LE(arr[i], arr[i+1]);
     }
     /* Test that after sorting an array, the values are in ascending order

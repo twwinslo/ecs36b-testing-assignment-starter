@@ -55,16 +55,17 @@ RC_GTEST_PROP(SwapTests,
               PropertySwapValuesInArray,
               (const std::vector<int>& values)
 ) {
+    RC_PRE(values.size() >= 2u);
+
+    int og_arr[values.size()];
+    copy_vector_to_array(values, og_arr);
     int arr[values.size()];
     copy_vector_to_array(values, arr);
     swap(&arr[0], &arr[1]);
-    long unsigned int i = 0;
-    EXPECT_EQ(arr[0], arr[1]);
-    i++;
-    EXPECT_EQ(arr[1], arr[0]);
-    i++;
-    for (; i <= values.size(); i++) {
-        EXPECT_EQ(arr[i], arr[i]);
+    EXPECT_EQ(arr[0], og_arr[1]);
+    EXPECT_EQ(arr[1], og_arr[0]);
+    for (long unsigned int i = 2; i < values.size(); i++) {
+        EXPECT_EQ(arr[i], og_arr[i]);
     }
 
     /*

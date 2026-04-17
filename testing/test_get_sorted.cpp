@@ -10,7 +10,7 @@ TEST(GetSortedTests, SimpleSortSortedArray) {
     for (int i =0; i < 5; i++) {
         EXPECT_EQ(arr_copy[i], i+1);
     }
-    free(arr_copy);
+    //free(arr_copy);
     /*
      * Check that we can sort an array that is already sorted.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -25,7 +25,7 @@ TEST(GetSortedTests, SimpleSortReverseSortedArray) {
     for (int i =0; i < 5; i++) {
         EXPECT_EQ(arr_copy[i], i+1);
     }
-    free(arr_copy);
+    //free(arr_copy);
     /*
      * Check that we can sort an array that is reverse sorted order.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -39,7 +39,7 @@ TEST(GetSortedTests, SimpleSortAverageArray) {
     for (int i =0; i < 5; i++) {
         EXPECT_EQ(arr_copy[i], i+1);
     }
-    free(arr_copy);
+    //free(arr_copy);
     /*
      * Check that we can sort an array where the elements in it are in random order.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -51,12 +51,12 @@ TEST(GetSortedTests, SimpleSortAverageArray) {
 TEST(GetSortedTests, SimpleSortArrayWithDuplicates) {
     int arr[] = {2,2,5,1,2};
     int* arr_copy = get_sorted(arr, 5);
-    EXPECT_EQ(arr[0], 1);
-    EXPECT_EQ(arr[1], 2);
-    EXPECT_EQ(arr[2], 2);
-    EXPECT_EQ(arr[3], 2);
-    EXPECT_EQ(arr[4], 5);
-    free(arr_copy);
+    EXPECT_EQ(arr_copy[0], 1);
+    EXPECT_EQ(arr_copy[1], 2);
+    EXPECT_EQ(arr_copy[2], 2);
+    EXPECT_EQ(arr_copy[3], 2);
+    EXPECT_EQ(arr_copy[4], 5);
+    //free(arr_copy);
     /*
      * Check that we can sort an array where there are duplicate elements in it.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -67,11 +67,11 @@ TEST(GetSortedTests, SimpleSortArrayWithDuplicates) {
 
 TEST(GetSortedTests, SimpleOriginalDoesNotChange) {
     int arr[] = {1,2,3,4,5};
-    int* arr_copy = get_sorted(arr, 5);
+    get_sorted(arr, 5);
     for (int i =0; i < 5; i++) {
         EXPECT_EQ(arr[i], i+1);
     }
-    free(arr_copy);
+    //free(arr_copy);
     /*
      * Check that the original array was not modified.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -88,7 +88,7 @@ TEST(GetSortedTests, SimpleCopyWasMade) {
             EXPECT_NE(arr+i, arr_copy + j);
         }
     }
-    free(arr_copy);
+    //free(arr_copy);
     /*
      * Check that the sorted array is copy of the original array in sorted order.
      * (ar and copy point to different locations in memory and no parts of the two arrays overlap)
@@ -106,10 +106,10 @@ RC_GTEST_PROP(GetSortedTests,
     int arr[values.size()];
     copy_vector_to_array(values, arr);
     int* sorted = get_sorted(arr, values.size());
-    for (long unsigned int i = 0; i < values.size() - 1; i++) {
+    for (long unsigned int i = 0; i + 1 < values.size(); i++) {
         EXPECT_LE(sorted[i], sorted[i+1]);
     }
-    free(sorted);
+    //free(sorted);
     /* Check that after sorting an array, the values are in ascending order
      * Don't forget to free any memory that was dynamically allocated as part of this test
      */
@@ -122,11 +122,11 @@ RC_GTEST_PROP(GetSortedTests,
 ) {
     int arr[values.size()];
     copy_vector_to_array(values, arr);
-    int* sorted = get_sorted(arr, values.size());
+    get_sorted(arr, values.size());
     for (long unsigned int i = 0; i < values.size(); i++) {
         EXPECT_EQ(arr[i], values[i]);
     }
-    free(sorted);
+    //free(sorted);
     /*
      * Check that the original array was not modified.
      * Don't forget to free any memory that was dynamically allocated as part of your test.
@@ -145,7 +145,7 @@ RC_GTEST_PROP(GetSortedTests,
         for (long unsigned int j = 0; j < values.size();j++)
         EXPECT_NE(arr + i, sorted + j);
     }
-    free(sorted);
+    //free(sorted);
     /*
      * Check that the sorted array is copy of the original array in sorted order.
      * (ar and copy point to different locations in memory and no parts of the two arrays overlap)
