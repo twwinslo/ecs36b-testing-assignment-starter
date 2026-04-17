@@ -1,10 +1,12 @@
 # Google Test And Debugging Writeup
 
 ## Things I Thought To Test
-1. Thing 1
-2. Thing 2
-3. Thing 3
-...
+1. Get Sorted - make sure it calls sorted on the copy of the array that's being returned
+2. Make Sorted - make sure that we don't go out of the bounds of the array with len
+3. Copy array - make sure it is an actual copy of the array and not just another pointer
+4. Min index - make sure this works for array of size 1 and where min is in the front
+5. swap - make sure changes are not only made to local variables
+6. parse args - make sure sstring is being used correctly and the memory is not deleted
 
 ## Bugs
 
@@ -12,76 +14,86 @@
 
 ### Location
 
-Line number(s) of the bugs.
+sorting.cpp lines 69-71
 
 ```c++
-Copy of the buggy code
+int* temp = a;
+  a = b;
+  b = temp;
 ```
 
 ### How the bug was located
 
-Explain how you found the bug
+the first test case for swaping 1 and 2 failed
 
 ### Description
 
-Describe the bug
+the address of local variables was changed
+but they were destroyed after the function returned
+so nothing actually swapped
 
 ### Fix 
 
-Explain how you fixed the bug
+instead swaping addresses, we need to swap the values they point to 
 
 ```c++
-Copy of the fixed code
+int temp = *a;
+  *a = *b;
+  *b = temp;
 ```
 
 ### Bug 2
 
 ### Location
 
-Line number(s) of the bugs.
+sorting.cpp line 17
 
 ```c++
-Copy of the buggy code
+return ar;
 ```
 
 ### How the bug was located
 
-Explain how you found the bug
+the test succeeded for an array that did not need to be changed but failed on all other ones
 
 ### Description
 
-Describe the bug
+returned the original array instead of the sorted copy
 
 ### Fix
 
-Explain how you fixed the bug
+return the correct sorted array
 
 ```c++
-Copy of the fixed code
+return sorted_ar;
 ```
 
 ### Bug 3
 
 ### Location
 
-Line number(s) of the bugs.
+sorting.cpp lines 55-57
 
 ```c++
-Copy of the buggy code
+if (ar[i] > ar[min_index]) {
+      min_index = i;
+    }
 ```
 
 ### How the bug was located
 
-Explain how you found the bug
+in my test of the array it was returning the index of max instead of min
 
 ### Description
 
-Describe the bug
+it replaces the min index with i if value at i is larger instead of smaller than min
 
 ### Fix
 
-Explain how you fixed the bug
+replace greater than > with less than < symbol
 
 ```c++
-Copy of the fixed code
+if (ar[i] < ar[min_index]) {
+      min_index = i;
+    }
 ```
