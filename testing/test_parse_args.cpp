@@ -26,13 +26,14 @@ TEST(ParseArgsTests, SimpleCheckArgumentsParsedSuccessfully) {
     char arg1[] = "1";
     char arg2[] = "2";
     char* argv[] = {arg0, arg1, arg2};
-    int* ar_out = nullptr;
-    int* len_out = nullptr;
+    int* ar_out = (int*)malloc(sizeof(int*));
+    int* len_out = (int*)malloc(sizeof(int));
     parse_args(argc, argv, ar_out, len_out);
     EXPECT_EQ(ar_out[0], 1);
     EXPECT_EQ(ar_out[1], 2);
     EXPECT_EQ(*len_out, 2);
     free(ar_out);
+    free(len_out);
 
     /*
      * Check that you parse the command line arguments correctly.
